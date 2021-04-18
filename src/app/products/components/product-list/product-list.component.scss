@@ -1,0 +1,9 @@
+div{
+    display: flex;
+    flex-direction: row;
+
+    app-product{
+        display: block;
+        margin-right: 2em;
+    }
+}

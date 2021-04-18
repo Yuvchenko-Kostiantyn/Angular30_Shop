@@ -1,0 +1,13 @@
+<div>
+    <p>Name: {{name}}</p>
+    <p>Description: {{description}}</p>
+    <p>Price: {{price}}</p>
+    <p>Category:{{category}}</p>
+    <p>Ivailability: {{isAvailable}}</p>
+    <div>
+        <h1>List of categories</h1>
+        <ul>
+            <li *ngFor="let category of categories">{{category}}</li>
+        </ul>
+    </div>
+</div>
