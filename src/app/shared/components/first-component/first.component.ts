@@ -6,11 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./first.component.scss']
 })
 export class FirstComponent implements OnInit {
-  public name = 'PropName1';
-  public description = 'Prop descritpion 1';
-  public price = 10;
-  public category = 'Food';
-  public isAvailable = false;
+  name = 'PropName1';
+  description = 'Prop descritpion 1';
+  price = 10;
+  category = 'Food';
+  isAvailable = false;
 
   categories = ['Food', 'Electronics', 'Consumables'];
 
