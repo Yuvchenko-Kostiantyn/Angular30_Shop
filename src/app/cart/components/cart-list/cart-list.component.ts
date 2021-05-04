@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductModel } from 'src/app/shared/models/product.model';
+import { Component, DoCheck, OnInit } from '@angular/core';
+import { ICartItem } from 'src/app/shared/models/cartItem.model';
 import { CartService } from '../../services/cart.service';
 
 @Component({
@@ -7,17 +7,23 @@ import { CartService } from '../../services/cart.service';
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss']
 })
-export class CartListComponent implements OnInit {
-  cartItems: ProductModel[];
+export class CartListComponent implements OnInit, DoCheck {
+  cartItems: ICartItem[];
+  itemsInCart: number;
+  totalSum: number;
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cartItems = this.cartService.getCartItems();
+    this.cartService.cartItems$.subscribe(cartItems => this.cartItems = cartItems);
   }
 
-  onItemRemove(): void {
-    console.log('Item not removed');
+  ngDoCheck(): void{
+    this.itemsInCart = this.cartService.getNumberOfItems();
+    this.totalSum = this.cartService.getTotalPrice();
   }
 
+  onRemoveItem(id: number) {
+    this.cartService.removeFromCart(id);
+  }
 }

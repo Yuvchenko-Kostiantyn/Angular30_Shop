@@ -1,11 +1,18 @@
 <div>
     <h2>Your cart</h2>
 
-    <div class="cart-wrapper" *ngIf="cartItems.length else emptyCart">
-        <div class="cart-item" *ngFor="let item of cartItems">
-            <h3>{{item.name}}</h3>
-            <p>{{item.price | currency}}</p>
-            <button (click)="onItemRemove(item)">Remove from cart</button>
+    <div class="container flex-row" *ngIf="cartItems.length else emptyCart">
+        <div class="row d-flex">
+            <div class="col-3" *ngFor="let item of cartItems">
+                <app-cart-item  [item]="item" (removeItem)="onRemoveItem($event)"></app-cart-item>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <p>Items in cart: {{itemsInCart}}</p>
+                <p>Total price: {{totalSum}}</p>
+            </div>
         </div>
     </div>
 

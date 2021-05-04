@@ -1,13 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductModel } from 'src/app/shared/models/product.model';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  styleUrls: ['./product.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductComponent implements OnInit {
   @Input() product: ProductModel;
+  @Output() addToCart = new EventEmitter<ProductModel>()
 
   constructor() { }
 
@@ -15,8 +17,7 @@ export class ProductComponent implements OnInit {
 
   }
 
-  onBuy(): void{
-    console.log('Item bought');
+  onAddToCart(event): void{
+    this.addToCart.emit(event);
   }
-
 }
