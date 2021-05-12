@@ -1,18 +1,17 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
   selector: '[appHighlight]'
 })
 export class HighlightDirective {
 
-  constructor() {}
+  constructor(private el: ElementRef) {}
 
-  //I have tried a number of variants but in the end nothing seems to work, as if directive just doesn't do anything at all
   @HostListener('mouseover') onMouseOver(){
-    console.log('over');
+    this.el.nativeElement.classList.add('bg-light');
   }
 
   @HostListener('mouseout') onMouseOut(){
-    console.log('out');
+    this.el.nativeElement.classList.remove('bg-light');
   }
 }

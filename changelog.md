@@ -29,3 +29,7 @@ A log of changes for the project in this repository
 
 ### Changed
 - Cart items now also display quantity of said items in cart
+
+## [1.0.2.1] - 2021-05-12
+### Changed
+- Fixed highlighting directive imports and actions
