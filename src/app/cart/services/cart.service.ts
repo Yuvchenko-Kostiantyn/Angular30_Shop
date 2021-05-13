@@ -35,19 +35,20 @@ export class CartService {
   constructor() { }
 
   getTotalPrice(): number {
+    // В этой строке выдает ошибку. Ругается на пропущеное стартовое значение, если добавлять и удалть товары в корзине
     return this.cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next);
-  };
+  }
 
   getNumberOfItems(): number {
-    return this.cartItems.reduce((total ,item) => total + item.quantity, 0)
+    return this.cartItems.reduce((total , item) => total + item.quantity, 0);
   }
 
   addToCart(newItem: ICartItem): void{
     // I really don't like this logic but it's the only way i managed to make it immutable
     const matchingItem = this.cartItems.find(item => item.id === newItem.id);
-    if(matchingItem){
+    if (matchingItem){
       const newArray = this.cartItems.filter(item => item.id !== matchingItem.id);
-      this.cartItems = [...newArray, {...matchingItem, quantity: matchingItem.quantity + newItem.quantity}]
+      this.cartItems = [...newArray, {...matchingItem, quantity: matchingItem.quantity + newItem.quantity}];
     } else {
       this.cartItems = [...this.cartItems, newItem];
     }

@@ -9,7 +9,7 @@ import { ProductModel } from 'src/app/shared/models/product.model';
 })
 export class ProductComponent implements OnInit {
   @Input() product: ProductModel;
-  @Output() addToCart = new EventEmitter<ProductModel>()
+  @Output() addToCart = new EventEmitter<ProductModel>();
 
   constructor() { }
 
@@ -17,7 +17,7 @@ export class ProductComponent implements OnInit {
 
   }
 
-  onAddToCart(event): void{
-    this.addToCart.emit(event);
+  onAddToCart(product /* type? */ ): void {
+    this.addToCart.emit(product);
   }
 }

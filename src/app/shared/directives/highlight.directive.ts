@@ -7,11 +7,11 @@ export class HighlightDirective {
 
   constructor(private el: ElementRef) {}
 
-  @HostListener('mouseover') onMouseOver(){
+  @HostListener('mouseover') onMouseOver(): void {
     this.el.nativeElement.classList.add('bg-light');
   }
 
-  @HostListener('mouseout') onMouseOut(){
+  @HostListener('mouseout') onMouseOut(): void {
     this.el.nativeElement.classList.remove('bg-light');
   }
 }
