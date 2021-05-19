@@ -10,7 +10,7 @@ import { ProductModel } from 'src/app/shared/models/product.model';
 })
 export class CartItemComponent implements OnInit {
   @Input() item: ICartItem;
-  @Output() removeItem = new EventEmitter<number>()
+  @Output() removeItem = new EventEmitter<number>();
 
   constructor() { }
 
@@ -18,6 +18,6 @@ export class CartItemComponent implements OnInit {
   }
 
   onItemRemove(id: number): void {
-    this.removeItem.emit(id)
+    this.removeItem.emit(id);
   }
 }

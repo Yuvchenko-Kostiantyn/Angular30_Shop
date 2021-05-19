@@ -9,6 +9,6 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('appTitle')title: ElementRef<HTMLHeadingElement>;
 
   ngAfterViewInit(): void {
-   this.title.nativeElement.textContent = 'ShopName'
+   this.title.nativeElement.textContent = 'ShopName';
   }
 }

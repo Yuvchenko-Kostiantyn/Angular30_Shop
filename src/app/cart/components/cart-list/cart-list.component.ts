@@ -18,12 +18,12 @@ export class CartListComponent implements OnInit, DoCheck {
     this.cartService.cartItems$.subscribe(cartItems => this.cartItems = cartItems);
   }
 
-  ngDoCheck(): void{
+  ngDoCheck(): void {
     this.itemsInCart = this.cartService.getNumberOfItems();
     this.totalSum = this.cartService.getTotalPrice();
   }
 
-  onRemoveItem(id: number) {
+  onRemoveItem(id: number): void {
     this.cartService.removeFromCart(id);
   }
 }
