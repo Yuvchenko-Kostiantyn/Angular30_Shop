@@ -28,31 +28,72 @@ export class CartService {
       }
   ];
 
+  totalSum = 0;
+  totalQuantity = 0;
+
   cartItems$ = new BehaviorSubject<ICartItem[]>(this.cartItems);
 
   constructor() { }
 
-  getTotalPrice(): number {
-    return this.cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0);
-  }
-
-  getNumberOfItems(): number {
-    return this.cartItems.reduce((total , item) => total + item.quantity, 0);
-  }
-
-  addToCart(newItem: ICartItem): void{
+  addProduct(newItem: ICartItem): void{
     const matchingItem = this.cartItems.find(item => item.id === newItem.id);
     if (matchingItem){
-      const newArray = this.cartItems.filter(item => item.id !== matchingItem.id);
-      this.cartItems = [...newArray, {...matchingItem, quantity: matchingItem.quantity + newItem.quantity}];
+     this.increaseQuantity(matchingItem.id);
     } else {
       this.cartItems = [...this.cartItems, newItem];
+      this.updateCartData();
     }
-    this.cartItems$.next(this.cartItems);
   }
 
-  removeFromCart(itemId: number): void{
+  increaseQuantity(itemId: number): void {
+      const targetItem = this.cartItems.find(item => item.id === itemId);
+      const newArray = this.cartItems.filter(item => item.id !== itemId);
+
+      this.cartItems = [...newArray, { ...targetItem, quantity: targetItem.quantity += 1}];
+
+      this.updateCartData();
+  }
+
+  decreaseQuantity(itemId: number): void {
+      const targetItem = this.cartItems.find(item => item.id === itemId);
+      const newArray = this.cartItems.filter(item => item.id !== itemId);
+
+      if (targetItem.quantity <= 1) {
+          this.cartItems = [...newArray];
+      } else {
+          targetItem.quantity--;
+          this.cartItems = [...newArray, targetItem];
+      }
+
+      this.updateCartData();
+  }
+
+  removeProduct(itemId: number): void{
     this.cartItems = this.cartItems.filter(item => item.id !== itemId);
-    this.cartItems$.next(this.cartItems);
+    this.updateCartData();
+  }
+
+  removeAllProducts(): void {
+      this.cartItems = [];
+      this.updateCartData();
+  }
+
+  isEmptyCart(): boolean {
+      return !!this.cartItems.length;
+  }
+
+  updateCartData(): void {
+      console.log('update');
+      this.getTotalPrice();
+      this.getNumberOfItems();
+      this.cartItems$.next(this.cartItems);
+  }
+
+  private getTotalPrice(): void {
+      this.totalSum = this.cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0);
+  }
+
+  private getNumberOfItems(): void {
+      this.totalQuantity = this.cartItems.reduce((total , item) => total + item.quantity, 0);
   }
 }

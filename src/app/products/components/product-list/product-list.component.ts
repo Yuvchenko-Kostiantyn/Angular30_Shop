@@ -19,7 +19,7 @@ export class ProductListComponent implements OnInit {
 
   onAddToCart(product /* : where is type? */): void{
     const transformedProduct = {...product, quantity: 1};
-    this.cartService.addToCart(transformedProduct);
+    this.cartService.addProduct(transformedProduct);
   }
 
 }
