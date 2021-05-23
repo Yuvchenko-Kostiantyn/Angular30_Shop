@@ -41,3 +41,14 @@ A log of changes for the project in this repository
 
 ### Changed
 - Fixed problem when removing last item from cart would cause error because of empty array reduction
+
+
+## [1.0.3.0] - 2021-05-23
+### Added
+- New cart methods
+- Increase/decrease item quantity buttons for cart items
+- Some new services for providing in FirstComponent
+
+### Changed
+- Name of most cart service methods
+- Returned FirsComponent to display
