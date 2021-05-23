@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { ICartItem } from 'src/app/shared/models/cartItem.model';
 import { Categories } from 'src/app/shared/models/categories';
-import { ProductModel } from 'src/app/shared/models/product.model';
-import { CartItemComponent } from '../components/cart-item/cart-item.component';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +33,7 @@ export class CartService {
   constructor() { }
 
   getTotalPrice(): number {
-    // В этой строке выдает ошибку. Ругается на пропущеное стартовое значение, если добавлять и удалть товары в корзине
-    return this.cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next);
+    return this.cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0);
   }
 
   getNumberOfItems(): number {
@@ -44,7 +41,6 @@ export class CartService {
   }
 
   addToCart(newItem: ICartItem): void{
-    // I really don't like this logic but it's the only way i managed to make it immutable
     const matchingItem = this.cartItems.find(item => item.id === newItem.id);
     if (matchingItem){
       const newArray = this.cartItems.filter(item => item.id !== matchingItem.id);

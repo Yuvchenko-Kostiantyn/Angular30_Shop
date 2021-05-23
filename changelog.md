@@ -4,7 +4,7 @@ A log of changes for the project in this repository
 ## [1.0.0] - 2021-04-18
 ### Added
 - Project itself
-- Basic models for prosucts and categories
+- Basic models for products and categories
 - Component to display your shopping cart
 - Component to display available product
 - First component, just for it to be there
@@ -17,7 +17,7 @@ A log of changes for the project in this repository
 - Cart now displays number of items in it as well as total value of all items
 
 ### Changed
-- Seprated project into proper modules
+- Separated project into proper modules
 - FirstComponent is not displayed anymore because it was bothering me
 - Styles were moved to bootstrap
 - Added unique identifier for products
@@ -33,3 +33,11 @@ A log of changes for the project in this repository
 ## [1.0.2.1] - 2021-05-12
 ### Changed
 - Fixed highlighting directive imports and actions
+
+
+## [1.0.2.2] - 2021-05-23
+### Added
+- Editorconfig with style rules for the project
+
+### Changed
+- Fixed problem when removing last item from cart would cause error because of empty array reduction
