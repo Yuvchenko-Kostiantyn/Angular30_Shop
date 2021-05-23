@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { ICartItem } from 'src/app/shared/models/cartItem.model';
+import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import { Categories } from 'src/app/shared/models/categories';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  cartItems: ICartItem[] = [
+  cartItems: CartItemModel[] = [
       {
         id: 1,
         name: 'CartProduct1',
@@ -31,11 +31,11 @@ export class CartService {
   totalSum = 0;
   totalQuantity = 0;
 
-  cartItems$ = new BehaviorSubject<ICartItem[]>(this.cartItems);
+  cartItems$ = new BehaviorSubject<CartItemModel[]>(this.cartItems);
 
   constructor() { }
 
-  addProduct(newItem: ICartItem): void{
+  addProduct(newItem: CartItemModel): void{
     const matchingItem = this.cartItems.find(item => item.id === newItem.id);
     if (matchingItem){
      this.increaseQuantity(matchingItem.id);

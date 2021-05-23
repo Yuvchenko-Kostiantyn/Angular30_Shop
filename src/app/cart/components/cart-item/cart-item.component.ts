@@ -6,7 +6,7 @@ import {
     OnInit,
     Output,
 } from '@angular/core';
-import { ICartItem } from 'src/app/shared/models/cartItem.model';
+import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 
 @Component({
   selector: 'app-cart-item',
@@ -15,7 +15,7 @@ import { ICartItem } from 'src/app/shared/models/cartItem.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CartItemComponent implements OnInit {
-  @Input() item: ICartItem;
+  @Input() item: CartItemModel;
   @Output() removeItem = new EventEmitter<number>();
   @Output() increaseQuantity = new EventEmitter<number>();
   @Output() decreaseQuantity = new EventEmitter<number>();

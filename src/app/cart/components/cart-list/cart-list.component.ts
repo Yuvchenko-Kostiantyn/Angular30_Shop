@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { ICartItem } from 'src/app/shared/models/cartItem.model';
+import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import { CartService } from '../../services/cart.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart-list.component.scss']
 })
 export class CartListComponent implements OnInit, DoCheck {
-  cartItems: ICartItem[];
+  cartItems: CartItemModel[];
   itemsInCart: number;
   totalSum: number;
 
