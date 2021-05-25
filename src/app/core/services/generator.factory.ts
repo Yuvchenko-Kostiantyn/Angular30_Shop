@@ -1,4 +1,5 @@
 import { GeneratorService } from './generator';
 
-const GeneratorFactory  = (n: number) => {
+export const GeneratorFactory  = (n): string => {
+    return new GeneratorService().generate(n);
 };
