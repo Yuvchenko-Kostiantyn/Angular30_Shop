@@ -1,9 +1,21 @@
 <div appHighlight class="card mr-1">
     <div class="card-body">
-      <h5 class="card-title">{{item.name}}</h5>
+      <h5 class="card-title" appClickHandler>{{item.name}}</h5>
       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
       <p class="card-text">{{item.price | currency}}</p>
-      <p class="card-text">{{item.quantity}}</p>
+
+      <div class="d-flex flex-row align-items-center justify-content-center mb-1">
+        <svg (click)="onQuantityDecrease(item.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+            <path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"/>
+        </svg>
+
+        <p class="card-text mb-0 mx-1">{{item.quantity}}</p>
+
+        <svg (click)="onQuantityIncrease(item.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
+        </svg>
+      </div>
+
       <button class="btn btn-primary" (click)="onItemRemove(item.id)">Remove from cart</button>
     </div>
   </div>

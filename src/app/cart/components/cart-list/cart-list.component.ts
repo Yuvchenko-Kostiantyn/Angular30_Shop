@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { ICartItem } from 'src/app/shared/models/cartItem.model';
+import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import { CartService } from '../../services/cart.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart-list.component.scss']
 })
 export class CartListComponent implements OnInit, DoCheck {
-  cartItems: ICartItem[];
+  cartItems: CartItemModel[];
   itemsInCart: number;
   totalSum: number;
 
@@ -19,11 +19,19 @@ export class CartListComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
-    this.itemsInCart = this.cartService.getNumberOfItems();
-    this.totalSum = this.cartService.getTotalPrice();
+    this.itemsInCart = this.cartService.totalQuantity;
+    this.totalSum = this.cartService.totalSum;
+  }
+
+  onIncreaseQuantity(id: number): void {
+      this.cartService.increaseQuantity(id);
+  }
+
+  onDecreaseQuantity(id: number): void {
+      this.cartService.decreaseQuantity(id);
   }
 
   onRemoveItem(id: number): void {
-    this.cartService.removeFromCart(id);
+    this.cartService.removeProduct(id);
   }
 }

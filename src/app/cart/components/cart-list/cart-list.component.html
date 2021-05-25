@@ -4,7 +4,12 @@
     <div class="container flex-row" *ngIf="cartItems.length else emptyCart">
         <div class="row d-flex">
             <div class="col-3" *ngFor="let item of cartItems">
-                <app-cart-item  [item]="item" (removeItem)="onRemoveItem($event)"></app-cart-item>
+                <app-cart-item
+                    [item]="item"
+                    (removeItem)="onRemoveItem($event)"
+                    (increaseQuantity)="onIncreaseQuantity($event)"
+                    (decreaseQuantity)="onDecreaseQuantity($event)">
+                </app-cart-item>
             </div>
         </div>
 
