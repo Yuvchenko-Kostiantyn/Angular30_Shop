@@ -1,9 +1,8 @@
 <div>
     <h2>Your cart</h2>
-
-    <div class="container flex-row" *ngIf="cartItems.length else emptyCart">
+    <div class="container flex-row" *ngIf="(cartItems | async)?.length > 0 else emptyCart">
         <div class="row d-flex">
-            <div class="col-3" *ngFor="let item of cartItems">
+            <div class="col-3" *ngFor="let item of cartItems | async | orderBy: 'price': true">
                 <app-cart-item
                     [item]="item"
                     (removeItem)="onRemoveItem($event)"
@@ -20,6 +19,10 @@
             </div>
         </div>
     </div>
+
+    <ng-template #cart>
+
+    </ng-template>
 
     <ng-template #emptyCart>
         <h3>You have no items in your cart</h3>

@@ -3,13 +3,10 @@ import { Directive, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@
 @Directive({
   selector: '[appClickHandler]'
 })
-export class ClickHandlerDirective implements OnInit{
+export class ClickHandlerDirective {
   @Input() color: string;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
-    ngOnInit(): void {
-      console.log('init');
-    }
 
     @HostListener('click') onClick(): void {
       const element = this.renderer.parentNode(this.el.nativeElement);

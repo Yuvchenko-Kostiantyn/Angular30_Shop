@@ -1,4 +1,5 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import { CartService } from '../../services/cart.service';
 
@@ -8,14 +9,14 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./cart-list.component.scss']
 })
 export class CartListComponent implements OnInit, DoCheck {
-  cartItems: CartItemModel[];
+  cartItems: Observable<CartItemModel[]>;
   itemsInCart: number;
   totalSum: number;
 
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cartService.cartItems$.subscribe(cartItems => this.cartItems = cartItems);
+    this.cartItems = this.cartService.getProducts$();
   }
 
   ngDoCheck(): void {
