@@ -40,8 +40,5 @@ export class FirstComponent implements OnInit {
       @Inject(LocalStorageService) private localStorageService: LocalStorageService
   ) { }
 
-  ngOnInit(): void {
-      console.log(this.localStorageService.getItem('value'));
-  }
-
+  ngOnInit(): void {}
 }
