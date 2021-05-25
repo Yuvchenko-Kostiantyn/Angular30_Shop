@@ -52,3 +52,10 @@ A log of changes for the project in this repository
 ### Changed
 - Name of most cart service methods
 - Returned FirsComponent to display
+
+
+### [1.0.3.1] - 2021-05-25
+### Added
+- More new services
+- Id generator
+- Directive that adds and removes black border on parent element
