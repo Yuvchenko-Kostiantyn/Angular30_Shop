@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import { Categories } from 'src/app/shared/models/categories';
@@ -34,6 +35,10 @@ export class CartService {
   cartItems$ = new BehaviorSubject<CartItemModel[]>(this.cartItems);
 
   constructor() { }
+
+  getProducts$(): Observable<CartItemModel[]> {
+      return this.cartItems$.asObservable();
+  }
 
   addProduct(newItem: CartItemModel): void{
     const matchingItem = this.cartItems.find(item => item.id === newItem.id);
@@ -83,7 +88,6 @@ export class CartService {
   }
 
   updateCartData(): void {
-      console.log('update');
       this.getTotalPrice();
       this.getNumberOfItems();
       this.cartItems$.next(this.cartItems);

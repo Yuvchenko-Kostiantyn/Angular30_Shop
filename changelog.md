@@ -54,8 +54,31 @@ A log of changes for the project in this repository
 - Returned FirsComponent to display
 
 
-### [1.0.3.1] - 2021-05-25
+## [1.0.3.1] - 2021-05-25
 ### Added
 - More new services
 - Id generator
 - Directive that adds and removes black border on parent element
+
+
+## [1.0.4.0] - 2021-05-25
+### Added
+- Pipe for sorting an array of cart items
+
+### Changed
+- Fixed adding items to cart
+- Added sorting to cart items, as of this moment only static, by price
+
+
+## [1.0.4.1]  2021-05-30
+### Changed
+- Refactored basic exports and imports in modules
+- Removed comments
+- Some formatting in modules
+
+## [1.0.4.2] 2021-05-30
+### Changed
+- Fixed orderBy pipe to sort objects properly
+- Added sorting selector for cart
+- Removed unnecessary console logs
+- Properly set orderBy pipe to be used in cart display for sorting cart items

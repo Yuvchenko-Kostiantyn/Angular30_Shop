@@ -6,6 +6,6 @@
       <p class="card-text">{{product.price | currency}}
       </p>
 
-      <button class="btn btn-primary" (click)="onAddToCart(product)" [ngClass]="{disabled: product.isAvailable}">Buy now</button>
+      <button class="btn btn-primary" (click)="onAddToCart(product)" [ngClass]="{disabled: !product.isAvailable}">Buy now</button>
     </div>
  </div>

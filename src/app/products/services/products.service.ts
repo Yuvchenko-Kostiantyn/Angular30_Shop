@@ -21,7 +21,7 @@ export class ProductsService {
       description: 'Description 2',
       price: 22,
       category: Categories.ELECTRONICS,
-      isAvailable: false,
+      isAvailable: true,
     },
     {
       id: 5,
@@ -29,7 +29,7 @@ export class ProductsService {
       description: 'Description 3',
       price: 3,
       category: Categories.FOOD,
-      isAvailable: false,
+      isAvailable: true,
     },
     {
       id: 6,
