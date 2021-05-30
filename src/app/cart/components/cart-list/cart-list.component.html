@@ -1,8 +1,50 @@
 <div>
-    <h2>Your cart</h2>
+    <div class="d-flex flex-row justify-content-between">
+        <h2>Your cart</h2>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                Sort items
+            </button>
+            <ul class="dropdown-menu p-1">
+                <li class="mb-0">Sort by</li>
+                <li *ngFor="let prop of properties">
+                    <input type="radio"
+                           id="{{prop}}"
+                           value="{{prop}}"
+                           [(ngModel)] ="sortOptions.sortingKey"
+                           name="properties">
+                    <label for="{{prop}}"> {{prop | titlecase}} </label>
+                </li>
+
+                <li class="mt-1 mb-0">Sorting Order</li>
+                <li>
+                    <input type="radio"
+                           id="ascending"
+                           [value]=true
+                           [(ngModel)] ="sortOptions.sortingOrder"
+                           name="order">
+                    <label for="ascending">Ascending</label>
+                </li>
+
+                <li>
+                    <input type="radio"
+                           id="descending"
+                           [value]=false
+                           [(ngModel)] ="sortOptions.sortingOrder"
+                           name="order">
+                    <label for="descending">Descending</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <div class="container flex-row" *ngIf="(cartItems | async)?.length > 0 else emptyCart">
         <div class="row d-flex">
-            <div class="col-3" *ngFor="let item of cartItems | async | orderBy: 'price': true">
+            <div class="col-3"
+                 *ngFor="let item of cartItems
+                 | async
+                 | orderBy: sortOptions.sortingKey: sortOptions.sortingOrder">
                 <app-cart-item
                     [item]="item"
                     (removeItem)="onRemoveItem($event)"
@@ -19,10 +61,6 @@
             </div>
         </div>
     </div>
-
-    <ng-template #cart>
-
-    </ng-template>
 
     <ng-template #emptyCart>
         <h3>You have no items in your cart</h3>

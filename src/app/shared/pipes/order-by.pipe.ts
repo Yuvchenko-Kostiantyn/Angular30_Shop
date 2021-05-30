@@ -1,13 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CartItemModel } from '../models/cartItem.model';
 
 @Pipe({
   name: 'orderBy'
 })
 export class OrderByPipe implements PipeTransform {
 
-  transform(items: CartItemModel[], key: string, isAsc: boolean): unknown {
-    return items.sort((a, b) => isAsc ? a[key] - b[key] : b[key] - a[key]);
+  transform(items: any[], key: string, isAsc: boolean): any[] {
+    return items.sort((a, b) => {
+        if (isAsc) {
+            return a[key] > b[key] ? 1 : -1;
+        } else {
+            return a[key] > b[key] ? -1 : 1;
+        }
+    });
+
   }
 
 }

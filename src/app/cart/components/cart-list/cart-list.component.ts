@@ -1,6 +1,8 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
+import { Categories } from '../../../shared/models/categories';
+import { ProductModel } from '../../../shared/models/product.model';
 import { CartService } from '../../services/cart.service';
 
 @Component({
@@ -12,6 +14,12 @@ export class CartListComponent implements OnInit, DoCheck {
   cartItems: Observable<CartItemModel[]>;
   itemsInCart: number;
   totalSum: number;
+  properties = [ 'price', 'name', 'quantity'];
+  sortOptions = {
+      sortingKey: 'price',
+      sortingOrder: false,
+  };
+
 
   constructor(private cartService: CartService) { }
 

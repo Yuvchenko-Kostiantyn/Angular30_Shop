@@ -88,7 +88,6 @@ export class CartService {
   }
 
   updateCartData(): void {
-      console.log('update');
       this.getTotalPrice();
       this.getNumberOfItems();
       this.cartItems$.next(this.cartItems);

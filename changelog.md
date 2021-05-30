@@ -75,3 +75,10 @@ A log of changes for the project in this repository
 - Refactored basic exports and imports in modules
 - Removed comments
 - Some formatting in modules
+
+## [1.0.4.2] 2021-05-30
+### Changed
+- Fixed orderBy pipe to sort objects properly
+- Added sorting selector for cart
+- Removed unnecessary console logs
+- Properly set orderBy pipe to be used in cart display for sorting cart items
