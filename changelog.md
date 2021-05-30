@@ -68,3 +68,10 @@ A log of changes for the project in this repository
 ### Changed
 - Fixed adding items to cart
 - Added sorting to cart items, as of this moment only static, by price
+
+
+## [1.0.4.1]  2021-05-30
+### Changed
+- Refactored basic exports and imports in modules
+- Removed comments
+- Some formatting in modules
