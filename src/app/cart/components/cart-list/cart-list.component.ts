@@ -1,9 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
-import { Categories } from '../../../shared/models/categories';
-import { ProductModel } from '../../../shared/models/product.model';
-import { CartService } from '../../services/cart.service';
+import { CartService } from '../../services';
 
 @Component({
   selector: 'app-cart-list',

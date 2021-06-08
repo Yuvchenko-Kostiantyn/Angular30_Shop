@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FirstComponent } from './components/first-component/first.component';
-import { HighlightDirective } from './directives/highlight.directive';
-import { ClickHandlerDirective } from './directives/click-handler.directive';
-import { OrderByPipe } from './pipes/order-by.pipe';
+import { ClickHandlerDirective, HighlightDirective } from './directives';
+import { OrderByPipe } from './pipes';
+
 
 
 

@@ -82,3 +82,8 @@ A log of changes for the project in this repository
 - Added sorting selector for cart
 - Removed unnecessary console logs
 - Properly set orderBy pipe to be used in cart display for sorting cart items
+
+
+## [1.0.5.0] 2021-06-08
+### Changed
+- Refactored component and service exports and imports

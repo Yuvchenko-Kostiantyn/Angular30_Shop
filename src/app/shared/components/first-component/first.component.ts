@@ -1,10 +1,15 @@
 import { Component, Inject, OnInit, Optional } from '@angular/core';
-import { ConfigOptionsService } from '../../../core/services/config-options.service';
-import { ConstantService, someConstantForService } from '../../../core/services/constant.service';
 import { ConstantServiceModel } from '../../../core/models/constant-service.model';
-import { GeneratorService } from '../../../core/services/generator';
-import { generatedString, GeneratorFactory } from '../../../core/services/generator.factory';
-import { LocalStorageService } from '../../../core/services/local-storage.service';
+import {
+    ConfigOptionsService,
+    ConstantService,
+    GeneratorService,
+    LocalStorageService,
+    GeneratorFactory,
+    someConstantForService,
+    generatedString,
+} from '../../../core/services';
+
 
 @Component({
   selector: 'app-first-component',
