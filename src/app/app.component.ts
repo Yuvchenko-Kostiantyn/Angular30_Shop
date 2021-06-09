@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(private storageService: LocalStorageService) {}
 
   ngOnInit(): void {
-      this.storageService.setItem('currentUser', this.regularUser);
+      this.storageService.setItem('currentUser', this.adminUser);
   }
 
   ngAfterViewInit(): void {

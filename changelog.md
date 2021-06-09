@@ -107,4 +107,6 @@ A log of changes for the project in this repository
 - Added decorator to Local Storage Service
 - Fixed cart data initialization
 
-
+## [1.0.5.3] 2021-06-09
+### Added 
+- Product resolver for product editing

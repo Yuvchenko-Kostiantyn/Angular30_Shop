@@ -7,6 +7,7 @@ import {
     EditComponent,
     OrdersComponent,
 } from './components';
+import { ProductResolver } from './guards/product.resolver';
 
 const routes: Routes = [
     { path: '', component: AdminComponent },
@@ -15,7 +16,13 @@ const routes: Routes = [
         children: [
             { path: '', component: ProductsComponent },
             { path: 'add', component: AddProductComponent },
-            { path: 'edit/:id', component: EditComponent },
+            {
+                path: 'edit/:id',
+                component: EditComponent,
+                resolve: {
+                    product: ProductResolver,
+                },
+            },
         ]
     },
     {path: 'orders', component: OrdersComponent}
@@ -23,6 +30,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [ProductResolver],
 })
 export class AdminRoutingModule { }

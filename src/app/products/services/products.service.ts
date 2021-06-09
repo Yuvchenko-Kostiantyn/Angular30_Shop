@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { ProductModel } from '../../shared/models/product.model';
 import { Categories } from '../../shared/models/categories';
 
@@ -45,5 +46,9 @@ export class ProductsService {
 
   getProducts(): ProductModel[] {
     return this.products;
+  }
+
+  getProductById(id: number): Observable<ProductModel> {
+      return of(this.products.find(el => el.id === +id));
   }
 }
