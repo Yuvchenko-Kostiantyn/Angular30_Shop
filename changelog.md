@@ -87,3 +87,24 @@ A log of changes for the project in this repository
 ## [1.0.5.0] 2021-06-08
 ### Changed
 - Refactored component and service exports and imports
+
+## [1.0.5.1] 2021-06-08
+### Added
+- Routing for the application
+- App administration module
+- Page for orders display
+### Changed
+- Minor template and imports/exports refactoring
+
+
+## [1.0.5.2] 2021-06-09
+### Added
+- Guards for administration and checkout
+- Forbidden url page
+- Not found URL page
+- User model and possible roles
+### Changed
+- Added decorator to Local Storage Service
+- Fixed cart data initialization
+
+
