@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit {
   constructor(private productsService: ProductsService, private cartService: CartService) { }
 
   ngOnInit(): void {
+    //   Тут у вас уже должен быть Observable
     this.products = this.productsService.getProducts();
   }
 
