@@ -7,6 +7,7 @@ import {
     EditComponent,
     OrdersComponent,
 } from './components';
+import { DeactivateEditGuard } from './guards/deactivate-edit.guard';
 import { ProductResolver } from './guards/product.resolver';
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
             {
                 path: 'edit/:id',
                 component: EditComponent,
+                canDeactivate: [ DeactivateEditGuard ],
                 resolve: {
                     product: ProductResolver,
                 },

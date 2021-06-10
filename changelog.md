@@ -110,3 +110,9 @@ A log of changes for the project in this repository
 ## [1.0.5.3] 2021-06-09
 ### Added 
 - Product resolver for product editing
+
+
+## [1.0.5.4] 2021-06-09
+### Added
+- CanDeactivate guard for edit
+
