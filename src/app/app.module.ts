@@ -18,7 +18,7 @@ import { OrdersModule } from './orders/orders.module';
     SharedModule,
     ProductsModule,
     CartModule,
-    OrdersModule
+    OrdersModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

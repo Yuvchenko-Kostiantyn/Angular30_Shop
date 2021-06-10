@@ -1,9 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
-import { Categories } from '../../../shared/models/categories';
-import { ProductModel } from '../../../shared/models/product.model';
-import { CartService } from '../../services/cart.service';
+import { CartService } from '../../services';
 
 @Component({
   selector: 'app-cart-list',
@@ -25,11 +23,11 @@ export class CartListComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getProducts$();
+    this.updateData();
   }
 
   ngDoCheck(): void {
-    this.itemsInCart = this.cartService.totalQuantity;
-    this.totalSum = this.cartService.totalSum;
+    this.updateData();
   }
 
   onIncreaseQuantity(id: number): void {
@@ -42,5 +40,10 @@ export class CartListComponent implements OnInit, DoCheck {
 
   onRemoveItem(id: number): void {
     this.cartService.removeProduct(id);
+  }
+
+  private updateData(): void {
+      this.itemsInCart = this.cartService.totalQuantity;
+      this.totalSum = this.cartService.totalSum;
   }
 }

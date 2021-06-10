@@ -1,19 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FirstComponent } from './components/first-component/first.component';
-import { HighlightDirective } from './directives/highlight.directive';
-import { ClickHandlerDirective } from './directives/click-handler.directive';
-import { OrderByPipe } from './pipes/order-by.pipe';
+import {
+    FirstComponent,
+    PageForbiddenComponent,
+    PageNotFoundComponent,
+} from './components';
+import { ClickHandlerDirective, HighlightDirective } from './directives';
+import { OrderByPipe } from './pipes';
 
-
+const components = [ FirstComponent, PageNotFoundComponent, PageForbiddenComponent ];
+const directives = [ HighlightDirective, ClickHandlerDirective ];
+const pipes = [ OrderByPipe ];
 
 @NgModule({
   declarations: [
-      FirstComponent,
-      HighlightDirective,
-      ClickHandlerDirective,
-      OrderByPipe,
+      ...components,
+      ...directives,
+      ...pipes,
   ],
   imports: [
       CommonModule,
@@ -22,10 +26,9 @@ import { OrderByPipe } from './pipes/order-by.pipe';
   exports: [
       CommonModule,
       FormsModule,
-      FirstComponent,
-      HighlightDirective,
-      ClickHandlerDirective,
-      OrderByPipe
+      ...components,
+      ...directives,
+      ...pipes,
   ]
 })
 export class SharedModule { }

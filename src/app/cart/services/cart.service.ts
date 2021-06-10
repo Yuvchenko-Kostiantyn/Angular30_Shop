@@ -37,6 +37,8 @@ export class CartService {
   constructor() { }
 
   getProducts$(): Observable<CartItemModel[]> {
+      // TODO: прибрати цей костиль
+      this.updateCartData();
       return this.cartItems$.asObservable();
   }
 

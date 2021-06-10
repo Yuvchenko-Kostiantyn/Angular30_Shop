@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { ProductComponent } from './components/product/product.component';
-import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductComponent, ProductListComponent, ProductViewComponent } from './components';
+
 
 
 
@@ -9,6 +9,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
   declarations: [
       ProductComponent,
       ProductListComponent,
+      ProductViewComponent,
   ],
   imports: [
       SharedModule,
