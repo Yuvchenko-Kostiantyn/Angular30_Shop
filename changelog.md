@@ -121,6 +121,7 @@ A log of changes for the project in this repository
 ### Added
 - Add mock server for http requests
 - Add database for mock server and populated it with data
+- Http timing interceptor that logs time spent on HTTP requests
 
 ### Changed
 - Products service now gets data from server 

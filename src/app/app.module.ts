@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
+import { HttpInterceptorProviders } from './core/interceptors';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { OrdersModule } from './orders/orders.module';
     CartModule,
     OrdersModule,
   ],
-  providers: [],
+  providers: HttpInterceptorProviders,
   bootstrap: [AppComponent]
 })
 export class AppModule { }
