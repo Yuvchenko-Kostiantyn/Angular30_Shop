@@ -116,3 +116,12 @@ A log of changes for the project in this repository
 ### Added
 - CanDeactivate guard for edit
 
+
+## [1.0.6.0] 2021-06-21
+### Added
+- Add mock server for http requests
+- Add database for mock server and populated it with data
+
+### Changed
+- Products service now gets data from server 
+
