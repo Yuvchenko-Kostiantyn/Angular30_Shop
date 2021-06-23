@@ -1,33 +1,41 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CartItemModel } from 'src/app/shared/models/cartItem.model';
-import { CartService } from '../../services';
+import { Component, OnInit, DoCheck, OnDestroy } from "@angular/core";
+import { Observable } from "rxjs";
+import { AppSettingsModel } from "src/app/core/models/app-settings.model";
+import { SortOptions } from "src/app/core/models/sort-options.model";
+import { AppSettingsService } from "src/app/core/services";
+import { CartItemModel } from "src/app/shared/models/cartItem.model";
+import { CartService } from "../../services";
+
 
 @Component({
   selector: 'app-cart-list',
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss']
 })
-export class CartListComponent implements OnInit, DoCheck {
+export class CartListComponent implements OnInit, DoCheck, OnDestroy {
   cartItems: Observable<CartItemModel[]>;
   itemsInCart: number;
   totalSum: number;
   properties = [ 'price', 'name', 'quantity'];
-  sortOptions = {
-      sortingKey: 'price',
-      sortingOrder: false,
-  };
+  sortOptions: SortOptions;
 
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private appSettingsService: AppSettingsService) { }
 
   ngOnInit(): void {
+    this.appSettingsService.getSettings()
+    .subscribe((settings: AppSettingsModel) => this.sortOptions = settings.sortOptions)
+
     this.cartItems = this.cartService.getProducts$();
     this.updateData();
   }
 
   ngDoCheck(): void {
     this.updateData();
+  }
+
+  ngOnDestroy(){
+    this.appSettingsService.updateSotringOptions(this.sortOptions)
   }
 
   onIncreaseQuantity(id: number): void {

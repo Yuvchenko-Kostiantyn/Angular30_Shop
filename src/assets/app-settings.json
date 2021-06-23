@@ -1,0 +1,8 @@
+{
+    "defaultSettings": {
+        "sortOptions": {
+        "sortingKey": "price",
+        "sortingOrder": false
+        }
+    }
+}

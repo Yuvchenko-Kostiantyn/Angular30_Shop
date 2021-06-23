@@ -4,3 +4,4 @@ export * from './gen-id.generator';
 export * from './generator.factory';
 export * from './generator';
 export * from './local-storage.service';
+export * from './app-settings.service';
