@@ -116,3 +116,17 @@ A log of changes for the project in this repository
 ### Added
 - CanDeactivate guard for edit
 
+
+## [1.0.6.0] 2021-06-21
+### Added
+- Add mock server for http requests
+- Add database for mock server and populated it with data
+- Http timing interceptor that logs time spent on HTTP requests
+### Changed
+- Products service now gets data from server 
+
+
+## [1.0.6.1] 2021-06-23
+### Changed
+- Broke everything by changing cart to work with mock backend
+

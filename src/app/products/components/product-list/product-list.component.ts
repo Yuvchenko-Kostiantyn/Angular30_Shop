@@ -15,13 +15,13 @@ export class ProductListComponent implements OnInit {
   constructor(private productsService: ProductsService, private cartService: CartService) { }
 
   ngOnInit(): void {
-    //   Тут у вас уже должен быть Observable
-    this.products = this.productsService.getProducts();
+    this.productsService.getProducts()
+        .subscribe(products => this.products = products);
   }
 
-  onAddToCart(product /* : where is type? */): void{
+  onAddToCart(product: ProductModel): void{
     const transformedProduct = {...product, quantity: 1};
-    this.cartService.addProduct(transformedProduct);
+    this.cartService.addProduct$(transformedProduct).subscribe();
   }
 
 }
