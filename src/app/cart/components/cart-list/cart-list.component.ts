@@ -1,5 +1,5 @@
 import { Component, OnInit, DoCheck, OnDestroy } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { combineLatest, Observable, Subject } from "rxjs";
 import { retry, takeUntil } from "rxjs/operators";
 import { AppSettingsModel } from "src/app/core/models/app-settings.model";
 import { SortOptions } from "src/app/core/models/sort-options.model";
@@ -13,10 +13,10 @@ import { CartService } from "../../services";
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss']
 })
-export class CartListComponent implements OnInit, DoCheck, OnDestroy {
+export class CartListComponent implements OnInit, OnDestroy {
   cartItems: Observable<CartItemModel[]>;
-  itemsInCart: number;
-  totalSum: number;
+  itemsInCart: Observable<number>
+  totalSum: Observable<number>
   properties = [ 'price', 'name', 'quantity'];
   sortOptions: SortOptions;
   takeUntil$ = new Subject();
@@ -28,14 +28,10 @@ export class CartListComponent implements OnInit, DoCheck, OnDestroy {
     this.appSettingsService.getSettings().pipe(
       takeUntil(this.takeUntil$),
     ).subscribe((settings: AppSettingsModel) => {
+      // Дані ніби з жсон-файлу приходять нормально, але все одно помилка
+      // так і не зміг розібратися чому
       this.sortOptions = settings.sortOptions
     })
-
-    this.cartItems = this.cartService.getProducts$();
-    this.updateData();
-  }
-
-  ngDoCheck(): void {
     this.updateData();
   }
 
@@ -45,20 +41,24 @@ export class CartListComponent implements OnInit, DoCheck, OnDestroy {
     this.takeUntil$.complete();
   }
 
-  onIncreaseQuantity(id: number): void {
-      this.cartService.increaseQuantity(id);
+  onIncreaseQuantity(item: CartItemModel): void {
+      this.cartService.increaseQuantity$(item).subscribe();
+      this.updateData();
   }
 
-  onDecreaseQuantity(id: number): void {
-      this.cartService.decreaseQuantity(id);
+  onDecreaseQuantity(item: CartItemModel): void {
+   this.cartService.decreaseQuantity$(item).subscribe();
+   this.updateData();
   }
 
   onRemoveItem(id: number): void {
-    this.cartService.removeProduct(id);
+    this.cartService.removeProduct(id).subscribe();
+    this.updateData()
   }
 
-  private updateData(): void {
-      this.itemsInCart = this.cartService.totalQuantity;
-      this.totalSum = this.cartService.totalSum;
+  updateData(){
+    this.cartItems = this.cartService.getProducts$();
+    this.totalSum = this.cartService.getTotalPrice();
+    this.itemsInCart = this.cartService.getNumberOfItems();
   }
 }

@@ -1,105 +1,79 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
-import { Categories } from 'src/app/shared/models/categories';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  cartItems: CartItemModel[] = [
-      {
-        id: 1,
-        name: 'CartProduct1',
-        description: 'Description 1',
-        price: 3,
-        category: Categories.FOOD,
-        isAvailable: true,
-        quantity: 1,
-      },
-      {
-        id: 2,
-        name: 'CartProduct2',
-        description: 'Description 2',
-        price: 18,
-        category: Categories.CONSUMABLES,
-        isAvailable: true,
-        quantity: 1,
-      }
-  ];
+  // Костиль на костилі, але працює, хоч і криво. 
+  // Основна проблема була з removeProduct, чомусь якщо робити світч 
+  // щоб кинути запит для отримання оновленого кошика delete повертав 404,
+  // але загалом погано що не неможливо нормально вибрати що саме поверне запит.
+  url = 'http://localhost:3000/cart'
+  
 
   totalSum = 0;
   totalQuantity = 0;
 
-  cartItems$ = new BehaviorSubject<CartItemModel[]>(this.cartItems);
-
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getProducts$(): Observable<CartItemModel[]> {
-      // TODO: прибрати цей костиль
-      this.updateCartData();
-      return this.cartItems$.asObservable();
+    return this.http.get<CartItemModel[]>(this.url);
   }
 
-  addProduct(newItem: CartItemModel): void{
-    const matchingItem = this.cartItems.find(item => item.id === newItem.id);
-    if (matchingItem){
-     this.increaseQuantity(matchingItem.id);
-    } else {
-      this.cartItems = [...this.cartItems, newItem];
-      this.updateCartData();
-    }
+  addProduct$(newItem: CartItemModel):  Observable<any>{
+        return this.increaseQuantity$(newItem).pipe(
+          catchError(() => {
+            return this.http.post(this.url, newItem);
+          })
+        )
   }
 
-  increaseQuantity(itemId: number): void {
-      const targetItem = this.cartItems.find(item => item.id === itemId);
-      const newArray = this.cartItems.filter(item => item.id !== itemId);
-
-      this.cartItems = [...newArray, { ...targetItem, quantity: targetItem.quantity += 1}];
-
-      this.updateCartData();
+  increaseQuantity$(item: CartItemModel): Observable<any> {
+    return this.http.patch(`${this.url}/${item.id}`,{...item, quantity:  item.quantity +=1 })
   }
 
-  decreaseQuantity(itemId: number): void {
-      const targetItem = this.cartItems.find(item => item.id === itemId);
-      const newArray = this.cartItems.filter(item => item.id !== itemId);
-
-      if (targetItem.quantity <= 1) {
-          this.cartItems = [...newArray];
-      } else {
-          targetItem.quantity--;
-          this.cartItems = [...newArray, targetItem];
-      }
-
-      this.updateCartData();
+  decreaseQuantity$(item: CartItemModel): Observable<any> {
+    return this.http.get(`${this.url}/${item.id}`).pipe(
+      switchMap((item: CartItemModel) => {
+        if(item.quantity > 1){
+          return this.http.patch(`${this.url}/${item.id}`,{...item, quantity:  item.quantity -=1 });
+        } else {
+          return this.removeProduct(item.id);
+        }
+      })
+    )
   }
 
-  removeProduct(itemId: number): void{
-    this.cartItems = this.cartItems.filter(item => item.id !== itemId);
-    this.updateCartData();
+  removeProduct(itemId: number): Observable<any>{
+    return this.http.delete(`${this.url}/${itemId}`);
   }
 
-  removeAllProducts(): void {
-      this.cartItems = [];
-      this.updateCartData();
+  removeAllProducts(): Observable<CartItemModel[]> {
+    // Не працює
+    return this.http.patch<CartItemModel[]>(this.url, []);
   }
 
-  isEmptyCart(): boolean {
-      return !!this.cartItems.length;
+  isEmptyCart(): Observable<boolean> {
+      return this.getProducts$().pipe(
+        map((cart: CartItemModel[]) => !!cart.length)
+      )
   }
 
-  updateCartData(): void {
-      this.getTotalPrice();
-      this.getNumberOfItems();
-      this.cartItems$.next(this.cartItems);
+  getTotalPrice(): Observable<number> {
+      return this.getProducts$().pipe(
+        map(
+          (cartItems: CartItemModel[]) => cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0)
+        )
+      )
   }
 
-  private getTotalPrice(): void {
-      this.totalSum = this.cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0);
-  }
-
-  private getNumberOfItems(): void {
-      this.totalQuantity = this.cartItems.reduce((total , item) => total + item.quantity, 0);
+  getNumberOfItems(): Observable<number> {
+    return this.http.get(this.url).pipe(
+      map((cartItems: CartItemModel[]) => cartItems.reduce((total , item) => total + item.quantity, 0))
+    )
   }
 }

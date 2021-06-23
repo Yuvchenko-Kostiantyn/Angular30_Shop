@@ -5,13 +5,13 @@
       <p class="card-text">{{item.price | currency}}</p>
 
       <div class="d-flex flex-row align-items-center justify-content-center mb-1">
-        <svg (click)="onQuantityDecrease(item.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+        <svg (click)="onQuantityDecrease(item)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
             <path d="M0 8a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H1a1 1 0 0 1-1-1z"/>
         </svg>
 
         <p class="card-text mb-0 mx-1">{{item.quantity}}</p>
 
-        <svg (click)="onQuantityIncrease(item.id)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+        <svg (click)="onQuantityIncrease(item)" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
             <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z"/>
         </svg>
       </div>

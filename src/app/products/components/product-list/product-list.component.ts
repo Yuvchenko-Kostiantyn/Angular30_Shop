@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
 
   onAddToCart(product: ProductModel): void{
     const transformedProduct = {...product, quantity: 1};
-    this.cartService.addProduct(transformedProduct);
+    this.cartService.addProduct$(transformedProduct).subscribe();
   }
 
 }

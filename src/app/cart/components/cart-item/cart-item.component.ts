@@ -17,8 +17,8 @@ import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 export class CartItemComponent implements OnInit {
   @Input() item: CartItemModel;
   @Output() removeItem = new EventEmitter<number>();
-  @Output() increaseQuantity = new EventEmitter<number>();
-  @Output() decreaseQuantity = new EventEmitter<number>();
+  @Output() increaseQuantity = new EventEmitter<CartItemModel>();
+  @Output() decreaseQuantity = new EventEmitter<CartItemModel>();
 
   constructor() { }
 
@@ -29,11 +29,11 @@ export class CartItemComponent implements OnInit {
     this.removeItem.emit(id);
   }
 
-  onQuantityIncrease(id: number): void {
-      this.increaseQuantity.emit(id);
+  onQuantityIncrease(item: CartItemModel): void {
+      this.increaseQuantity.emit(item);
   }
 
-  onQuantityDecrease(id: number): void {
-      this.decreaseQuantity.emit(id);
+  onQuantityDecrease(item: CartItemModel): void {
+      this.decreaseQuantity.emit(item);
   }
 }

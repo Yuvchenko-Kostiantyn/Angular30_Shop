@@ -56,8 +56,8 @@
 
         <div class="row">
             <div class="col">
-                <p>Items in cart: {{itemsInCart}}</p>
-                <p>Total price: {{totalSum}}</p>
+                <p>Items in cart: {{itemsInCart | async}}</p>
+                <p>Total price: {{totalSum | async}}</p>
             </div>
         </div>
     </div>
