@@ -1,5 +1,6 @@
 import { Component, OnInit, DoCheck, OnDestroy } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
+import { retry, takeUntil } from "rxjs/operators";
 import { AppSettingsModel } from "src/app/core/models/app-settings.model";
 import { SortOptions } from "src/app/core/models/sort-options.model";
 import { AppSettingsService } from "src/app/core/services";
@@ -18,13 +19,17 @@ export class CartListComponent implements OnInit, DoCheck, OnDestroy {
   totalSum: number;
   properties = [ 'price', 'name', 'quantity'];
   sortOptions: SortOptions;
+  takeUntil$ = new Subject();
 
 
   constructor(private cartService: CartService, private appSettingsService: AppSettingsService) { }
 
   ngOnInit(): void {
-    this.appSettingsService.getSettings()
-    .subscribe((settings: AppSettingsModel) => this.sortOptions = settings.sortOptions)
+    this.appSettingsService.getSettings().pipe(
+      takeUntil(this.takeUntil$),
+    ).subscribe((settings: AppSettingsModel) => {
+      this.sortOptions = settings.sortOptions
+    })
 
     this.cartItems = this.cartService.getProducts$();
     this.updateData();
@@ -35,7 +40,9 @@ export class CartListComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.appSettingsService.updateSotringOptions(this.sortOptions)
+    this.appSettingsService.updateSotringOptions(this.sortOptions);
+    this.takeUntil$.next();
+    this.takeUntil$.complete();
   }
 
   onIncreaseQuantity(id: number): void {
