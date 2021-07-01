@@ -25,15 +25,20 @@ export class CartService {
   }
 
   addProduct$(newItem: CartItemModel):  Observable<any>{
+    //   тут происходит увеличение количества, так как этот объект передается по ссылке
         return this.increaseQuantity$(newItem).pipe(
-          catchError(() => {
+            // Такой подход приводит к тому, что у вас при добавлении товара,
+            // сразу количество устанавливается в 2шт.
+            // На мой взгляд, это плохое решение, когда совмещают апдейт и вставку да и еще через catchError
+            catchError(() => {
+                // а потом тут увеличенное количество вставляется
             return this.http.post(this.url, newItem);
           })
         )
   }
 
   increaseQuantity$(item: CartItemModel): Observable<any> {
-    return this.http.patch(`${this.url}/${item.id}`,{...item, quantity:  item.quantity +=1 })
+    return this.http.put(`${this.url}/${item.id}`,{...item, quantity:  item.quantity + 1 }) // тут устанавливалось сразу 2шт
   }
 
   decreaseQuantity$(item: CartItemModel): Observable<any> {
@@ -54,6 +59,8 @@ export class CartService {
 
   removeAllProducts(): Observable<CartItemModel[]> {
     // Не працює
+    // Реализация зависит от бекенда
+    // Если он поддерживает такую операцию, то должна работать, если нет, то извините
     return this.http.patch<CartItemModel[]>(this.url, []);
   }
 

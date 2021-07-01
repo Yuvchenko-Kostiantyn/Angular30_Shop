@@ -9,6 +9,7 @@ export class TimingInterceptor implements HttpInterceptor {
         const start = new Date().getTime()
         return next.handle(req).pipe(
             tap((res) => {
+                // Как-то не очень понятно, что такое 0.
                 if(res.type !== 0){
                    const end = new Date().getTime();
                    console.log(`Request took ${end-start} ms`); 
