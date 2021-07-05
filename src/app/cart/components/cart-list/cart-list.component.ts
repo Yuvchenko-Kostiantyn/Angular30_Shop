@@ -6,6 +6,7 @@ import { SortOptions } from "src/app/core/models/sort-options.model";
 import { AppSettingsService } from "src/app/core/services";
 import { CartItemModel } from "src/app/shared/models/cartItem.model";
 import { CartService } from "../../services";
+import * as CartActions from '../../store/cart.actions';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class CartListComponent implements OnInit, OnDestroy {
       this.sortOptions = settings.sortOptions
     })
     this.updateData();
+    this.cartItems = this.cartService.getProducts$();
+    this.cartService.getStore().subscribe(val => console.log(val))
   }
 
   ngOnDestroy(){

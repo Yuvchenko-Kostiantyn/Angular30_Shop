@@ -130,3 +130,7 @@ A log of changes for the project in this repository
 ### Changed
 - Broke everything by changing cart to work with mock backend
 
+
+## [1.0.7.0] 2021-07-04
+### Added
+- Added store to cart and products modules

@@ -3,8 +3,7 @@ import { Observable, of } from "rxjs";
 import { catchError, map, retry, tap } from "rxjs/operators";
 import { AppSettingsModel } from "../models/app-settings.model";
 import { SortOptions } from "../models/sort-options.model";
-import { LocalStorageService } from "./index";
-import * as settingsObject from '../../../assets/app-settings.json';
+import { LocalStorageService } from "./local-storage.service";
 import { HttpClient } from "@angular/common/http";
 
 

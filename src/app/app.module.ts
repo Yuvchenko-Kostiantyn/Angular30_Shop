@@ -8,6 +8,7 @@ import { ProductsModule } from './products/products.module';
 import { CartModule } from './cart/cart.module';
 import { OrdersModule } from './orders/orders.module';
 import { HttpInterceptorProviders } from './core/interceptors';
+import { RootStoreModule } from './root-store.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { HttpInterceptorProviders } from './core/interceptors';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RootStoreModule,
     SharedModule,
     ProductsModule,
     CartModule,

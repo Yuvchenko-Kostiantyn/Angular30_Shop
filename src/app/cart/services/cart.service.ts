@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { AppState } from 'src/app/reducers';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
+import * as CartActions from '../store/cart.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,10 @@ export class CartService {
   totalSum = 0;
   totalQuantity = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private store: Store<AppState>
+  ) { }
 
   getProducts$(): Observable<CartItemModel[]> {
     return this.http.get<CartItemModel[]>(this.url);
