@@ -1,11 +1,11 @@
-import { Component, OnInit, DoCheck, OnDestroy } from "@angular/core";
-import { combineLatest, Observable, Subject } from "rxjs";
-import { retry, takeUntil } from "rxjs/operators";
-import { AppSettingsModel } from "src/app/core/models/app-settings.model";
-import { SortOptions } from "src/app/core/models/sort-options.model";
-import { AppSettingsService } from "src/app/core/services";
-import { CartItemModel } from "src/app/shared/models/cartItem.model";
-import { CartService } from "../../services";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import {  Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+import { AppSettingsService } from 'src/app/core/services';
+import { CartItemModel } from 'src/app/shared/models/cartItem.model';
+import { AppState } from '../../../reducers';
+import { CartService } from '../../services';
 import * as CartActions from '../../store/cart.actions';
 
 
@@ -16,52 +16,39 @@ import * as CartActions from '../../store/cart.actions';
 })
 export class CartListComponent implements OnInit, OnDestroy {
   cartItems: Observable<CartItemModel[]>;
-  itemsInCart: Observable<number>
-  totalSum: Observable<number>
+  itemsInCart: Observable<number>;
+  totalSum: Observable<number>;
   properties = [ 'price', 'name', 'quantity'];
-  sortOptions: SortOptions;
-  takeUntil$ = new Subject();
+  sortOptions = {
+    sortingKey: 'price',
+    sortingOrder: false,
+  };
 
 
-  constructor(private cartService: CartService, private appSettingsService: AppSettingsService) { }
+  constructor(
+      private cartService: CartService,
+      private appSettingsService: AppSettingsService,
+  ) { }
 
   ngOnInit(): void {
-    this.appSettingsService.getSettings().pipe(
-      takeUntil(this.takeUntil$),
-    ).subscribe((settings: AppSettingsModel) => {
-      // Дані ніби з жсон-файлу приходять нормально, але все одно помилка
-      // так і не зміг розібратися чому
-      this.sortOptions = settings.sortOptions
-    })
-    this.updateData();
-    this.cartItems = this.cartService.getProducts$();
-    this.cartService.getStore().subscribe(val => console.log(val))
+    this.cartItems = this.cartService.cartItems;
+    this.itemsInCart = this.cartService.totalQuantity;
+    this.totalSum = this.cartService.totalSum;
   }
 
-  ngOnDestroy(){
-    this.appSettingsService.updateSotringOptions(this.sortOptions);
-    this.takeUntil$.next();
-    this.takeUntil$.complete();
+  ngOnDestroy(): void{
+    this.appSettingsService.updateSortingOptions(this.sortOptions);
   }
 
   onIncreaseQuantity(item: CartItemModel): void {
-      this.cartService.increaseQuantity$(item).subscribe();
-      this.updateData();
+      this.cartService.increaseQuantity$(item);
   }
 
   onDecreaseQuantity(item: CartItemModel): void {
-   this.cartService.decreaseQuantity$(item).subscribe();
-   this.updateData();
+      this.cartService.decreaseQuantity$(item);
   }
 
   onRemoveItem(id: number): void {
-    this.cartService.removeProduct(id).subscribe();
-    this.updateData()
-  }
-
-  updateData(){
-    this.cartItems = this.cartService.getProducts$();
-    this.totalSum = this.cartService.getTotalPrice();
-    this.itemsInCart = this.cartService.getNumberOfItems();
+   this.cartService.removeProduct$(id);
   }
 }

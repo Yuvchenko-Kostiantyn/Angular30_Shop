@@ -7,8 +7,8 @@ import { cartReducers, CartState } from '../cart/store';
 import { productsReducers, ProductsState } from '../products/store';
 
 export interface AppState {
-  products: ProductsState,
-  cart: CartState
+  products: ProductsState;
+  cart: CartState;
 }
 
 export const stateReducers: ActionReducerMap<AppState> = {

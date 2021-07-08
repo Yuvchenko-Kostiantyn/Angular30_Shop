@@ -22,8 +22,7 @@ export class CartItemComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onItemRemove(id: number): void {
     this.removeItem.emit(id);

@@ -10,16 +10,19 @@ import * as ProductsActions from './products.actions';
 export const productsFeatureKey = 'products';
 
 export interface ProductsState {
-  data: ReadonlyArray<ProductModel> 
+  data: Array<ProductModel>;
 }
 
 const initialState: ProductsState = {
   data: [],
-}
+};
 
-export const productsReducers = createReducer(initialState, 
+export const productsReducers = createReducer(initialState,
   on(ProductsActions.getProducts, state => {
-    return { ...state }
+    return { ...state };
+  }),
+  on(ProductsActions.setProducts, (state, action) => {
+      return {...state, data: [...action.products]};
   })
 );
 
