@@ -16,7 +16,7 @@ export class ProductsService {
       private store: Store<AppState>
   ) { }
 
-  get products(): Observable<ProductModel[]>{
+  get products$(): Observable<ProductModel[]>{
       return this.store.select(state => state.products.data);
   }
 

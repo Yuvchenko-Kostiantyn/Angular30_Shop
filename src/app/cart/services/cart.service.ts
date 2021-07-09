@@ -11,7 +11,7 @@ import * as CartActions from '../store/cart.actions';
   providedIn: 'root'
 })
 export class CartService {
-  url = 'http://localhost:3000/cart';
+
 
   constructor(
     private http: HttpClient,
@@ -36,21 +36,17 @@ export class CartService {
       );
   }
 
-  getCart(): Observable<CartItemModel[]> {
-    return this.http.get<CartItemModel[]>(this.url);
-  }
-
   addProduct$(item: CartItemModel): void{
     this.store.dispatch(CartActions.addItem({ item }));
   }
 
   increaseQuantity$(item: CartItemModel): void {
-      this.store.dispatch(CartActions.increaseQuantity({ id: item.id }));
+      this.store.dispatch(CartActions.increaseQuantity({ item }));
   }
 
   decreaseQuantity$(item: CartItemModel): void {
       if (item.quantity > 1){
-          this.store.dispatch(CartActions.decreaseQuantity({id: item.id}));
+          this.store.dispatch(CartActions.decreaseQuantity({item}));
       } else {
           this.removeProduct$(item.id);
       }

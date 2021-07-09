@@ -21,7 +21,7 @@ export const productsReducers = createReducer(initialState,
   on(ProductsActions.getProducts, state => {
     return { ...state };
   }),
-  on(ProductsActions.setProducts, (state, action) => {
+  on(ProductsActions.getProductsSuccess, (state, action) => {
       return {...state, data: [...action.products]};
   })
 );

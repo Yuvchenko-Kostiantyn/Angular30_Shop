@@ -18,41 +18,38 @@ const initialState: CartState = {
 };
 
 export const cartReducers = createReducer(initialState,
-      on(CartActions.getCart, state => {
-        return { ...state };
-      }),
-      on(CartActions.addItems, (state: CartState, action) => {
-        return { ...state, items: [...state.items, ...action.items] };
+      on(CartActions.getCartSuccess, (state, action) => {
+        return { ...state, items: action.items };
       }),
       on(CartActions.addItem, (state: CartState, action) => {
         return { ...state, items: [...state.items, action.item]};
       }),
-      on(CartActions.removeItem, (state: CartState, action) => {
+      on(CartActions.removeItemSuccess, (state: CartState, action) => {
         return {
          ...state,
          items: state.items.filter(item => item.id !== action.id)
         };
       }),
-    on(CartActions.increaseQuantity, (state: CartState, action) => {
-        const item = state.items.find(cartItem => cartItem.id === action.id);
+      on(CartActions.increaseQuantitySuccess, (state: CartState, action) => {
+        const item = state.items.find(cartItem => cartItem.id === action.item.id);
         return {
             ...state,
             items: [
-                ...state.items.filter(cartItem => cartItem.id !== action.id),
+                ...state.items.filter(cartItem => cartItem.id !== action.item.id),
                 {...item, quantity: item.quantity + 1}
             ]
         };
-    }),
-    on(CartActions.decreaseQuantity, (state: CartState, action) => {
-        const item = state.items.find(cartItem => cartItem.id === action.id);
+      }),
+      on(CartActions.decreaseQuantitySuccess, (state: CartState, action) => {
+        const item = state.items.find(cartItem => cartItem.id === action.item.id);
         return {
             ...state,
             items: [
-                ...state.items.filter(cartItem => cartItem.id !== action.id),
+                ...state.items.filter(cartItem => cartItem.id !== action.item.id),
                 {...item, quantity: item.quantity - 1}
             ]
         };
-    })
+      }),
 );
 
 

@@ -7,6 +7,8 @@ import * as cartState from './cart/store';
 import * as productsState from './products/store';
 import { EffectsModule } from '@ngrx/effects';
 import { stateReducers, stateMetaReducers } from './reducers';
+import { ProductsEffects } from './products/store/products.effects';
+import { CartEffects } from './cart/store/cart.effects';
 
 
 
@@ -34,6 +36,7 @@ import { stateReducers, stateMetaReducers } from './reducers';
         maxAge: 25, // Retains last 25 states
         logOnly: environment.production, // Restrict extension to log-only mode
     }),
+    EffectsModule.forFeature([ProductsEffects, CartEffects]),
   ]
 })
 export class RootStoreModule { }

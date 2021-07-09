@@ -135,8 +135,14 @@ A log of changes for the project in this repository
 ### Added
 - Added store to cart and products modules
 
-## [1.0.7.1] 2021-07-04
+## [1.0.7.1] 2021-07-08
 ### Changed
 - Cart Service now gets data through store
 - Cart component now takes data from store through service rather than directly from API
 - A lot of code formatting and styling fixes
+
+## [1.0.7.2] 2021-07-09
+### Added
+- Separate service for cart api calls
+### Changed
+- Cart now works on actions and effects
