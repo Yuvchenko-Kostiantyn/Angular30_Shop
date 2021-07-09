@@ -1,11 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { catchError, map, retry, tap } from "rxjs/operators";
-import { AppSettingsModel } from "../models/app-settings.model";
-import { SortOptions } from "../models/sort-options.model";
-import { LocalStorageService } from "./index";
-import * as settingsObject from '../../../assets/app-settings.json';
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { catchError, map, retry, tap } from 'rxjs/operators';
+import { AppSettingsModel } from '../models/app-settings.model';
+import { SortOptions } from '../models/sort-options.model';
+import { LocalStorageService } from './local-storage.service';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -19,26 +18,26 @@ export class AppSettingsService {
   constructor(private localStorageService: LocalStorageService, private http: HttpClient) { }
 
   getSettings(): Observable<AppSettingsModel> {
-    const settings = <AppSettingsModel>this.localStorageService.getItem(this.key);
-    if(settings){
-      return of(settings)
+    const settings = this.localStorageService.getItem(this.key) as AppSettingsModel;
+    if (settings){
+      return of(settings);
     } else {
       return this.http.get<{defaultSettings: AppSettingsModel}>('../../../assets/app-settings.json')
       .pipe(
         map(data => data.defaultSettings),
         retry(2),
         catchError(err => of(err))
-      )
+      );
     }
-  } 
+  }
 
-  updateSotringOptions(sortOptions: SortOptions){
+  updateSortingOptions(sortOptions: SortOptions): void{
     this.getSettings().pipe(
       tap(settings => {
         const newSettings = {...settings, sortOptions};
-        this.setSettings(newSettings)
+        this.setSettings(newSettings);
       })
-    )
+    );
   }
 
   private setSettings(settings: AppSettingsModel): void{

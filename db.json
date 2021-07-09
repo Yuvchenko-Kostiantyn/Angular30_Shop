@@ -3,7 +3,7 @@
     {
       "id": 3,
       "name": "Product3",
-      "description": "Description 1",
+      "description": "Description 3",
       "price": 10,
       "category": "Consumables",
       "isAvailable": true
@@ -11,7 +11,7 @@
     {
       "id": 4,
       "name": "Product4",
-      "description": "Description 2",
+      "description": "Description 4",
       "price": 22,
       "category": "Electronics",
       "isAvailable": true
@@ -19,7 +19,7 @@
     {
       "id": 5,
       "name": "Product5",
-      "description": "Description 3",
+      "description": "Description 5",
       "price": 3,
       "category": "Food",
       "isAvailable": true
@@ -27,7 +27,7 @@
     {
       "id": 6,
       "name": "Product6",
-      "description": "Description 4",
+      "description": "Description 6",
       "price": 18,
       "category": "Consumables",
       "isAvailable": true
@@ -35,31 +35,31 @@
   ],
   "cart": [
     {
-      "id": 3,
-      "name": "Product3",
-      "description": "Description 1",
-      "price": 10,
-      "category": "Consumables",
-      "isAvailable": true,
-      "quantity": 2
-    },
-    {
-      "id": 5,
-      "name": "Product5",
-      "description": "Description 3",
-      "price": 3,
-      "category": "Food",
-      "isAvailable": true,
-      "quantity": 2
-    },
-    {
-      "id": 6,
-      "name": "Product6",
-      "description": "Description 4",
+      "id": 7,
+      "name": "Product7",
+      "description": "Description 7",
       "price": 18,
       "category": "Consumables",
       "isAvailable": true,
-      "quantity": 5
+      "quantity": 3
+    },
+    {
+      "id": 4,
+      "name": "Product4",
+      "description": "Description 4",
+      "price": 22,
+      "category": "Electronics",
+      "isAvailable": true,
+      "quantity": 1
+    },
+    {
+      "id": 3,
+      "name": "Product3",
+      "description": "Description 3",
+      "price": 10,
+      "category": "Consumables",
+      "isAvailable": true,
+      "quantity": 1
     }
   ]
 }

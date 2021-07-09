@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AppState } from '../../reducers';
 import { ProductModel } from '../../shared/models/product.model';
 
 @Injectable({
@@ -9,9 +11,16 @@ import { ProductModel } from '../../shared/models/product.model';
 export class ProductsService {
   url = 'http://localhost:3000/products';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+      private http: HttpClient,
+      private store: Store<AppState>
+  ) { }
 
-  getProducts(): Observable<ProductModel[]> {
+  get products$(): Observable<ProductModel[]>{
+      return this.store.select(state => state.products.data);
+  }
+
+  getProducts$(): Observable<ProductModel[]> {
     return this.http.get<ProductModel[]>(this.url);
   }
 

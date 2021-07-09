@@ -19,7 +19,7 @@ A log of changes for the project in this repository
 ### Changed
 - Separated project into proper modules
 - FirstComponent is not displayed anymore because it was bothering me
-- Styles were moved to bootstrap
+- Styles moved to bootstrap
 - Added unique identifier for products
 
 ## [1.0.2] - 2021-05-04
@@ -130,3 +130,19 @@ A log of changes for the project in this repository
 ### Changed
 - Broke everything by changing cart to work with mock backend
 
+
+## [1.0.7.0] 2021-07-04
+### Added
+- Added store to cart and products modules
+
+## [1.0.7.1] 2021-07-08
+### Changed
+- Cart Service now gets data through store
+- Cart component now takes data from store through service rather than directly from API
+- A lot of code formatting and styling fixes
+
+## [1.0.7.2] 2021-07-09
+### Added
+- Separate service for cart api calls
+### Changed
+- Cart now works on actions and effects

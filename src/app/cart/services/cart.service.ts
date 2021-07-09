@@ -1,86 +1,69 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppState } from 'src/app/reducers';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
+import * as CartActions from '../store/cart.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  // Костиль на костилі, але працює, хоч і криво. 
-  // Основна проблема була з removeProduct, чомусь якщо робити світч 
-  // щоб кинути запит для отримання оновленого кошика delete повертав 404,
-  // але загалом погано що не неможливо нормально вибрати що саме поверне запит.
-  url = 'http://localhost:3000/cart'
-  
 
-  totalSum = 0;
-  totalQuantity = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private store: Store<AppState>
+  ) { }
 
-  getProducts$(): Observable<CartItemModel[]> {
-    return this.http.get<CartItemModel[]>(this.url);
+  get cartItems(): Observable<CartItemModel[]>{
+      return this.store.select(store => [...store.cart.items]);
   }
 
-  addProduct$(newItem: CartItemModel):  Observable<any>{
-    //   тут происходит увеличение количества, так как этот объект передается по ссылке
-        return this.increaseQuantity$(newItem).pipe(
-            // Такой подход приводит к тому, что у вас при добавлении товара,
-            // сразу количество устанавливается в 2шт.
-            // На мой взгляд, это плохое решение, когда совмещают апдейт и вставку да и еще через catchError
-            catchError(() => {
-                // а потом тут увеличенное количество вставляется
-            return this.http.post(this.url, newItem);
-          })
-        )
+  get totalSum(): Observable<number>{
+      return this.cartItems.pipe(
+          map((cartItems: CartItemModel[]) => cartItems.reduce((total , item) => total + item.quantity, 0))
+      );
   }
 
-  increaseQuantity$(item: CartItemModel): Observable<any> {
-    return this.http.put(`${this.url}/${item.id}`,{...item, quantity:  item.quantity + 1 }) // тут устанавливалось сразу 2шт
+  get totalQuantity(): Observable<number>{
+      return this.cartItems.pipe(
+          map(
+              (cartItems: CartItemModel[]) => cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0)
+          )
+      );
   }
 
-  decreaseQuantity$(item: CartItemModel): Observable<any> {
-    return this.http.get(`${this.url}/${item.id}`).pipe(
-      switchMap((item: CartItemModel) => {
-        if(item.quantity > 1){
-          return this.http.patch(`${this.url}/${item.id}`,{...item, quantity:  item.quantity -=1 });
-        } else {
-          return this.removeProduct(item.id);
-        }
-      })
-    )
+  addProduct$(item: CartItemModel): void{
+    this.store.dispatch(CartActions.addItem({ item }));
   }
 
-  removeProduct(itemId: number): Observable<any>{
-    return this.http.delete(`${this.url}/${itemId}`);
+  increaseQuantity$(item: CartItemModel): void {
+      this.store.dispatch(CartActions.increaseQuantity({ item }));
   }
 
-  removeAllProducts(): Observable<CartItemModel[]> {
-    // Не працює
-    // Реализация зависит от бекенда
-    // Если он поддерживает такую операцию, то должна работать, если нет, то извините
-    return this.http.patch<CartItemModel[]>(this.url, []);
+  decreaseQuantity$(item: CartItemModel): void {
+      if (item.quantity > 1){
+          this.store.dispatch(CartActions.decreaseQuantity({item}));
+      } else {
+          this.removeProduct$(item.id);
+      }
+  }
+
+  removeProduct$(id: number): void{
+      this.store.dispatch(CartActions.removeItem({id}));
+  }
+
+  removeAllProducts$(): void {
+    this.store.dispatch(CartActions.emptyCart());
   }
 
   isEmptyCart(): Observable<boolean> {
-      return this.getProducts$().pipe(
+      return this.cartItems.pipe(
         map((cart: CartItemModel[]) => !!cart.length)
-      )
+      );
   }
 
-  getTotalPrice(): Observable<number> {
-      return this.getProducts$().pipe(
-        map(
-          (cartItems: CartItemModel[]) => cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0)
-        )
-      )
-  }
-
-  getNumberOfItems(): Observable<number> {
-    return this.http.get(this.url).pipe(
-      map((cartItems: CartItemModel[]) => cartItems.reduce((total , item) => total + item.quantity, 0))
-    )
-  }
 }
