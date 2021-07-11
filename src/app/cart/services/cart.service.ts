@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppState } from 'src/app/reducers';
+import { AppState } from 'src/app/store';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import * as CartActions from '../store/cart.actions';
 
