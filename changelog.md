@@ -150,3 +150,7 @@ A log of changes for the project in this repository
 ## [1.0.7.3] 2021-07-11
 ### Added
 - Router store
+
+## [1.0.7.4] 2021-07-12
+### Added
+- Selectors

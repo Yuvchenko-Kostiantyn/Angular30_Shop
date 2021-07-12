@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class OrderByPipe implements PipeTransform {
 
   transform(items: any[], key: string, isAsc: boolean): any[] {
-    return items.sort((a, b) => {
+    return [...items].sort((a, b) => {
         if (isAsc) {
             return a[key] > b[key] ? 1 : -1;
         } else {

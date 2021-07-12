@@ -1,9 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../store';
 import { ProductModel } from '../../shared/models/product.model';
+import * as ProductsSelectors from '../store/products.selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ProductsService {
   ) { }
 
   get products$(): Observable<ProductModel[]>{
-      return this.store.select(state => state.products.data);
+      return this.store.pipe(select(ProductsSelectors.productsSelector));
   }
 
   getProducts$(): Observable<ProductModel[]> {

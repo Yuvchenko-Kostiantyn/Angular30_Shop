@@ -1,5 +1,4 @@
-import { RouterState } from '@angular/router';
-import { routerReducer } from '@ngrx/router-store';
+import { routerReducer, RouterState } from '@ngrx/router-store';
 import {
   ActionReducerMap,
   MetaReducer
@@ -7,11 +6,12 @@ import {
 import { environment } from '../../environments/environment';
 import { cartReducers, CartState } from '../cart/store';
 import { productsReducers, ProductsState } from '../products/store';
+import { RouterStateUrl } from './router.serializer';
 
 export interface AppState {
   products: ProductsState;
   cart: CartState;
-  router: RouterState;
+  router: RouterStateUrl;
 }
 
 export const stateReducers: ActionReducerMap<AppState> = {
