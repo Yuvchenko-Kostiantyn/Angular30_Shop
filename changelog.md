@@ -146,3 +146,11 @@ A log of changes for the project in this repository
 - Separate service for cart api calls
 ### Changed
 - Cart now works on actions and effects
+
+## [1.0.7.3] 2021-07-11
+### Added
+- Router store
+
+## [1.0.7.4] 2021-07-12
+### Added
+- Selectors

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } fr
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { LocalStorageService } from './core/services';
-import { AppState } from './reducers';
+import { AppState } from './store';
 import { Roles } from './shared/models/roles';
 import { UserDataModel } from './shared/models/user-data.model';
 import * as CartActions from './cart/store/cart.actions';

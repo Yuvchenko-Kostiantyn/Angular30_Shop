@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AppState } from 'src/app/reducers';
+import { AppState } from 'src/app/store';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import * as CartActions from '../store/cart.actions';
+import * as CartSelectors from '../store/cart.selectors';
 
 @Injectable({
   providedIn: 'root'
@@ -19,22 +19,20 @@ export class CartService {
   ) { }
 
   get cartItems(): Observable<CartItemModel[]>{
-      return this.store.select(store => [...store.cart.items]);
-  }
-
-  get totalSum(): Observable<number>{
-      return this.cartItems.pipe(
-          map((cartItems: CartItemModel[]) => cartItems.reduce((total , item) => total + item.quantity, 0))
-      );
+      return this.store.select(CartSelectors.cartSelector);
   }
 
   get totalQuantity(): Observable<number>{
-      return this.cartItems.pipe(
-          map(
-              (cartItems: CartItemModel[]) => cartItems.map(item => item.price * item.quantity).reduce((prev, next) => prev + next, 0)
-          )
-      );
+      return this.store.select(CartSelectors.totalQuantity);
   }
+
+  get totalSum(): Observable<number>{
+      return this.store.select(CartSelectors.totalSum);
+  }
+
+    isEmptyCart(): Observable<boolean> {
+        return this.store.select(CartSelectors.cartEmptySelector);
+    }
 
   addProduct$(item: CartItemModel): void{
     this.store.dispatch(CartActions.addItem({ item }));
@@ -59,11 +57,4 @@ export class CartService {
   removeAllProducts$(): void {
     this.store.dispatch(CartActions.emptyCart());
   }
-
-  isEmptyCart(): Observable<boolean> {
-      return this.cartItems.pipe(
-        map((cart: CartItemModel[]) => !!cart.length)
-      );
-  }
-
 }

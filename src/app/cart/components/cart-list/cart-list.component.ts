@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 import { AppSettingsService } from 'src/app/core/services';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
-import { AppState } from '../../../reducers';
+import { AppState } from '../../../store';
 import { CartService } from '../../services';
 import * as CartActions from '../../store/cart.actions';
 

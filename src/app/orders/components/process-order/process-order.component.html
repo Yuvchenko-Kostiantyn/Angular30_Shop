@@ -1,1 +1,50 @@
-<p>process-order works!</p>
+<form [formGroup]="form" (submit)="onSubmit()">
+
+<div class="mb-3">
+    <label for="firstName" class="form-label">First name</label>
+    <input type="text" class="form-control" id="firstName" [class.is-invalid]="firstName.invalid && firstName.touched"  formControlName="firstName">
+    <small *ngIf="firstName.invalid && firstName.touched" class="text-danger">First Name must start with uppercase letter</small>
+</div>
+
+<div class="mb-3">
+    <label for="lastName" class="form-label">Last name</label>
+    <input type="text" class="form-control" [class.is-invalid]="lastName.invalid && lastName.touched"  id="lastName" formControlName="lastName">
+    <small *ngIf="lastName.invalid && lastName.touched" class="text-danger">Last Name must start with uppercase letter</small>
+</div>
+
+<div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input type="email"
+           class="form-control"
+           [class.is-invalid]="email.invalid && email.touched"
+           id="email"
+           formControlName="email"
+           appAsyncEmailValidator>
+    <small *ngIf="email.invalid && email.touched" class="text-danger">Please enter a valid email</small>
+<!--    <small *ngIf="isMailAlredyExists && !email.invalid" class="text-danger">This email is already in use</small>-->
+</div>
+
+<div class="mb-3" formArrayName="phones">
+    <button type="button" class="btn btn-primary" (click)="addPhone()">Add Phone Number</button>
+    <div *ngFor="let phone of phones.controls; index as i">
+        <label attr.for="{{'phone' + i}}" class="form-label">Phone number</label>
+        <div class="d-flex">
+            <input type="text" class="form-control mr-1" attr.id="{{'phone' + i}}">
+            <button class="btn btn-danger" *ngIf="i > 0" (click)="removePhone(i)">X</button>
+        </div>
+    </div>
+</div>
+
+<div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="takeout" formControlName="takeout">
+    <label class="form-check-label" for="takeout">Takeout</label>
+</div>
+
+<div class="mb-3" *ngIf="!takeout.value">
+    <label for="address" class="form-label">Address</label>
+    <textarea class="form-control" id="address" formControlName="address"></textarea>
+</div>
+
+
+<button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+</form>
