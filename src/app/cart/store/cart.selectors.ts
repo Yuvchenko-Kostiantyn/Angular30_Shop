@@ -23,3 +23,10 @@ export const totalSum = createSelector(
             .reduce((prev, next) => prev + next, 0);
     },
 );
+
+export const cartEmptySelector = createSelector(
+    cartSelector,
+    (items) => {
+        return !!items.length;
+    }
+)

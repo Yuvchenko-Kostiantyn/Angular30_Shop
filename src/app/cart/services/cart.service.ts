@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/store';
 import { CartItemModel } from 'src/app/shared/models/cartItem.model';
 import * as CartActions from '../store/cart.actions';
@@ -20,16 +19,20 @@ export class CartService {
   ) { }
 
   get cartItems(): Observable<CartItemModel[]>{
-      return this.store.pipe(select(CartSelectors.cartSelector));
+      return this.store.select(CartSelectors.cartSelector);
   }
 
   get totalQuantity(): Observable<number>{
-      return this.store.pipe(select(CartSelectors.totalQuantity));
+      return this.store.select(CartSelectors.totalQuantity);
   }
 
   get totalSum(): Observable<number>{
-      return this.store.pipe(select(CartSelectors.totalSum));
+      return this.store.select(CartSelectors.totalSum);
   }
+
+    isEmptyCart(): Observable<boolean> {
+        return this.store.select(CartSelectors.cartEmptySelector);
+    }
 
   addProduct$(item: CartItemModel): void{
     this.store.dispatch(CartActions.addItem({ item }));
@@ -54,11 +57,4 @@ export class CartService {
   removeAllProducts$(): void {
     this.store.dispatch(CartActions.emptyCart());
   }
-
-  isEmptyCart(): Observable<boolean> {
-      return this.cartItems.pipe(
-        map((cart: CartItemModel[]) => !!cart.length)
-      );
-  }
-
 }
