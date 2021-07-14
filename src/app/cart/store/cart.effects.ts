@@ -16,6 +16,7 @@ export class CartEffects {
 
     loadCart$ = createEffect(() => this.actions$.pipe(
         ofType(CartActions.getCart),
+        // я вам давал комментарий по поводу использования switchMap и concatMap
         mergeMap(() => this.cartApiService.getCart().pipe(
             map((items) => CartActions.getCartSuccess({items}))
         ))
